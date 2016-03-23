@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    
+
     <title>Blank</title>
 
     <!-- STYLESHEETS -->
@@ -23,15 +23,38 @@
     <div class="container">
       <div class="row">
         <div class="col-md-8 col-md-offset-2">
-        
+
           <h1>We are on track!</h1>
+
+          <form class="form-inline">
+						<label>Search Gifs</label>
+						<input type="text" class="form-control gif-input" name="q" value="cats" placeholder="search gifs">
+						<input type="hidden" name="api_key" value="dc6zaTOxFJmzC">
+						<input type="submit" value="Go!" class="btn btn-primary">
+					</form>
+
+          <div id="yay-gif">
+            <script id="yay-gif-template" type="text/x-handlebars-template">
+              <img src="https://media.giphy.com/media/l4Kiaux2fgbYfulig/giphy.gif" width="100px">
+              <img src="{{url}}" width="100px">
+            </script>
+          </div>
+
+
+          <!-- we'll append in here later -->
+          <div id="intro-paragraph">
+            <script id="intro-paragraph-template" type="text/x-handlebars-template">
+              <p>We are the awesome students of WDI{{cohort}}. Check out our githubs:<p>
+            </script>
+          </div>
 
           <ul id="students-list" class="list-group">
             <!-- handlebars template for inside of students list -->
             <script id="student-li-template" type="text/x-handlebars-template">
               {{#each students}}
                 <li class="list-group-item">
-                  <a href="{{github_username}}"><strong>{{first_name}} {{last_name}}</strong></a>
+                  <a href="{{github_username}}"><strong>{{initials.first}}{{initials.last}}: {{first_name}} {{last_name}}</strong></a>
+                  <p>{{favorite_colors.[0]}}</p>
                 </li>
               {{/each}}
             </script>

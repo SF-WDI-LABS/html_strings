@@ -2,9 +2,47 @@ console.log('Sanity Check: JS is working!');
 
 $(document).ready(function(){
 
+  // get template source
+  var gifSource = $('#yay-gif-template').html();
+  // compile the template
+  var gifTemplate = Handlebars.compile(gifSource);
+
+
+  $.ajax({
+    url: 'http://api.giphy.com/v1/gifs/search',
+    method: 'GET',
+    data: $('form').serialize(),
+    success: gifSuccess
+  });
+
+  // what to do once request is successfull
+  function gifSuccess(json){
+    console.log(json.data[0].images.downsized.url);
+    // use template to create HTML string
+    var gifString = gifTemplate({ url: json.data[0].images.downsized.url });
+    // append the new HTML string to the page
+    $('#yay-gif').append(gifString);
+
+  }
+
+
+
+
+  var introSource = $('#intro-paragraph-template').html();
+  console.log(introSource);
+
+  var introTemplate = Handlebars.compile(introSource);
+  console.log(introTemplate);
+
+
+  var introParagraphString = introTemplate({ cohort: data27.cohort });
+  console.log(introParagraphString);
+
+  $('#intro-paragraph').append(introParagraphString);
+
   // select a template script, and pull out the handlebars and html inside it
   var source = $('#student-li-template').html();
-  console.log(source);
+  // console.log(source);
 
   // compile the handlebars template
   var template = Handlebars.compile(source);
@@ -30,9 +68,18 @@ var data27 = {
   github_schedule: "https://github.com/sf-wdi-27-28/schedule-27",
   students:[
     {
-      first_name: 'Rene', 
+      first_name: 'Rene',
       last_name: 'Arellano',
-      github_username: 'relative-rene'
+      github_username: 'relative-rene',
+      initials : {
+        first: 'R',
+        last: 'A'
+      },
+      favorite_colors: [
+        "none",
+        "too cool for this",
+        "totally love blue tho"
+      ]
     },
     {
       first_name: 'Keith',
@@ -58,7 +105,7 @@ var data27 = {
       first_name: 'Ayush',
       last_name: 'Jha',
       github_username: 'ayush'
-    },  
+    },
     {
       first_name: 'Jonathan',
       last_name: 'Ortiz',
@@ -152,7 +199,7 @@ var data27 = {
       last_name: "Gaff",
       first_name: "Travis",
       github_username: "tgaff",
-      car: { 
+      car: {
         make: 'kia',
         model: 'cilantro',
         year: 2019
